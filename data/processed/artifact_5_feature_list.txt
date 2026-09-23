@@ -1,0 +1,1 @@
+total_price,total_payment,purchase_month,purchase_day_of_week,purchase_hour
