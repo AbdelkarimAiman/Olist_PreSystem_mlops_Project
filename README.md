@@ -74,7 +74,7 @@ mlflow ui
 PYTHONPATH=. pytest
 ```
 
-🐳 ## Docker Deployment
+## 🐳 Docker Deployment
 To build and run the entire system inside an isolated container:
 
 ```Bash
@@ -82,7 +82,7 @@ docker-compose up --build
 ```
 Once the container is running, access the interactive API documentation (Swagger UI) at:http://localhost:8000/docs
 
-🤖 ## CI/CD Pipeline
+## 🤖 CI/CD Pipeline
 The project includes a GitHub Actions workflow (.github/workflows/ci.yml) that automatically executes:
 
  - Environment setup and dependency installation.
