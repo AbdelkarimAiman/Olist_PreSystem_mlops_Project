@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import pickle
 import pandas as pd
 import os
 import joblib
@@ -15,22 +14,17 @@ app = FastAPI(
 
 # Load configuration and model path
 config = load_config()
-model_path = config['paths']['model_output_path']
+model_path = "models/random_forest_model.pkl"
 
 # Load the trained model safely
-model = None
-if os.path.exists(model_path):
-    with open(model_path, 'rb') as f:
-        model = joblib.load(model_path)
+model = joblib.load(model_path) if os.path.exists(model_path) else None
 
-# Define request body schema using Pydantic
+# Define request body schema matching model features
 class OrderRequest(BaseModel):
-    order_item_id: int
-    price: float
-    freight_value: float
-    product_name_lenght: float = 0.0
-    product_description_lenght: float = 0.0
-    product_photos_qty: float = 0.0
+    total_payment: float = 0.0
+    total_price: float = 0.0
+    purchase_dayofweek: int = 0
+    purchase_hour: int = 0
 
 @app.get("/")
 def home():
@@ -48,12 +42,16 @@ def health_check():
 def predict_delivery(order: OrderRequest):
     """Predict if an order will be late based on input features."""
     if model is None:
-        raise HTTPException(status_code=500, status_log="Model not found or not trained yet.")
-    
-    # Convert input data to DataFrame format expected by the model
-    input_data = pd.DataFrame([order.dict()])
+        raise HTTPException(status_code=500, detail="Model not found or not trained yet.")
     
     try:
+        # تحويل المدخلات إلى DataFrame
+        input_data = pd.DataFrame([order.dict()])
+        
+        # مطابقة أعمدة الموديل مباشرة بدون سكيلر خارجي
+        if hasattr(model, "feature_names_in_"):
+            input_data = input_data.reindex(columns=model.feature_names_in_, fill_value=0)
+
         prediction = model.predict(input_data)
         probability = model.predict_proba(input_data)[:, 1][0]
         

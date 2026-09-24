@@ -1,9 +1,11 @@
 import pandas as pd
 import joblib
 import logging
+import mlflow
+import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score
 
 # Configure logging for the training process
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -11,10 +13,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 class ModelTrainer:
     def __init__(self, data_path: str):
         self.data_path = data_path
-        self.model = RandomForestClassifier(n_estimators=100, random_state=42)
+        self.n_estimators = 100
+        self.model = RandomForestClassifier(n_estimators=self.n_estimators, random_state=42)
 
     def train_model(self) -> None:
-        """Load data, split into train/test, train the Random Forest model, and save it."""
+        """Load data, split into train/test, train the Random Forest model, track with MLflow, and save it."""
         logging.info("Loading dataset for training...")
         df = pd.read_csv(self.data_path)
         
@@ -29,13 +32,24 @@ class ModelTrainer:
             # Split data into training and testing sets
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
             
-            logging.info("Training the Random Forest model...")
-            self.model.fit(X_train, y_train)
-            
-            # Evaluate the model
-            predictions = self.model.predict(X_test)
-            acc = accuracy_score(y_test, predictions)
-            logging.info(f"Model trained successfully! Test Accuracy: {acc:.4f}")
+            # Start MLflow run to track parameters, metrics, and model
+            with mlflow.start_run():
+                logging.info("Logging parameters to MLflow...")
+                mlflow.log_param("n_estimators", self.n_estimators)
+                mlflow.log_param("model_type", "RandomForest")
+                
+                logging.info("Training the Random Forest model...")
+                self.model.fit(X_train, y_train)
+                
+                # Evaluate the model
+                predictions = self.model.predict(X_test)
+                acc = accuracy_score(y_test, predictions)
+                logging.info(f"Model trained successfully! Test Accuracy: {acc:.4f}")
+                
+                # Log metrics and model to MLflow
+                mlflow.log_metric("accuracy", acc)
+                mlflow.sklearn.log_model(self.model,"random_forest_model",skops_trusted_types=["sklearn.tree._tree.Tree"])            
+                logging.info("MLflow logging completed successfully.")
             
             # Save the trained model to disk
             model_path = "models/random_forest_model.pkl"
@@ -46,5 +60,6 @@ class ModelTrainer:
 
 if __name__ == "__main__":
     # Test training pipeline locally
-    trainer = ModelTrainer("data/processed/final_data.csv")
-    print("Model Trainer module template ready!")
+    trainer = ModelTrainer("data/processed/final_processed_data.csv")
+    trainer.train_model()
+    print("Model Trainer module execution and MLflow logging finished successfully!")
