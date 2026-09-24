@@ -52,34 +52,34 @@ Olist_PreSystem_mlops_Project/
 git clone <repository-url>
 cd Olist_PreSystem_mlops_Project
 pip install -r requirements.txt
-
+```
 
 ## 2.Run training and log experiments with MLflow:
 
 ```Bash
 python src/train.py
-
+```
 
     To launch the local MLflow tracking UI:
 
 ```Bash
 mlflow ui
-
+```
 
     Then open your browser at: http://127.0.0.1:5000
 
 ## 3.Run automated local tests:
 
-Bash
+```Bash
 PYTHONPATH=. pytest
-
+```
 
 🐳 ## Docker Deployment
 To build and run the entire system inside an isolated container:
 
 ```Bash
 docker-compose up --build
-
+```
 Once the container is running, access the interactive API documentation (Swagger UI) at:http://localhost:8000/docs
 
 🤖 ## CI/CD Pipeline
