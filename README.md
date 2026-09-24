@@ -33,7 +33,7 @@ Olist_PreSystem_mlops_Project/
 ├── docker-compose.yml         # Multi-container orchestration
 ├── requirements.txt           # Python dependencies
 └── dvc.yaml                   # DVC pipeline stages
-```text
+
 
 ## 🛠️ Prerequisites
 
@@ -86,9 +86,3 @@ Once the container is running, access the interactive API documentation (Swagger
 The project includes a GitHub Actions workflow (.github/workflows/ci.yml) that automatically executes:
 
  - Environment setup and dependency installation.
-
-<<<<<<< HEAD
- - Automated execution of all pytest suites to ensure code health on every code push.
-=======
-Automated execution of all pytest suites to ensure code health on every code push.
->>>>>>> e3bab9b8606d6be18010d8e0e5bdf333d6b1fcf7
