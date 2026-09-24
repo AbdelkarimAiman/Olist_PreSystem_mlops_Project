@@ -34,46 +34,56 @@ Olist_PreSystem_mlops_Project/
 ├── requirements.txt           # Python dependencies
 └── dvc.yaml                   # DVC pipeline stages
 
-🛠️ Prerequisites
-Ensure you have the following installed on your machine:
+## 🛠️ Prerequisites
 
-Python 3.9+
+    Ensure you have the following installed on your machine:
 
-Docker & Docker Compose
+    Python 3.9+
 
-Git
+    Docker & Docker Compose
 
-⚙️ Local Setup & Execution
-Clone the repository and install dependencies:
+    Git
 
-Bash
+## ⚙️ Local Setup & Execution
+## 1. Clone the repository and install dependencies:
+
+```Bash
 git clone <repository-url>
 cd Olist_PreSystem_mlops_Project
 pip install -r requirements.txt
-Run training and log experiments with MLflow:
 
-Bash
+
+## 2.Run training and log experiments with MLflow:
+
+```Bash
 python src/train.py
-To launch the local MLflow tracking UI:
 
-Bash
+
+    To launch the local MLflow tracking UI:
+
+```Bash
 mlflow ui
-Then open your browser at: http://127.0.0.1:5000
 
-Run automated local tests:
+
+    Then open your browser at: http://127.0.0.1:5000
+
+## 3.Run automated local tests:
 
 Bash
 PYTHONPATH=. pytest
-🐳 Docker Deployment
+
+
+🐳 ## Docker Deployment
 To build and run the entire system inside an isolated container:
 
-Bash
+```Bash
 docker-compose up --build
+
 Once the container is running, access the interactive API documentation (Swagger UI) at:http://localhost:8000/docs
 
-🤖 CI/CD Pipeline
+🤖 ## CI/CD Pipeline
 The project includes a GitHub Actions workflow (.github/workflows/ci.yml) that automatically executes:
 
-Environment setup and dependency installation.
+ - Environment setup and dependency installation.
 
-Automated execution of all pytest suites to ensure code health on every code push.
+ - Automated execution of all pytest suites to ensure code health on every code push.
