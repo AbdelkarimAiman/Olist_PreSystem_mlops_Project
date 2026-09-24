@@ -1,4 +1,4 @@
-# Olist MLOps & Pre-System Project (Task 3)
+# Olist MLOps & Pre-System Project
 
 A comprehensive Machine Learning Operations (MLOps) project built on the Olist e-commerce dataset, covering the complete end-to-end lifecycle including data preprocessing, training, experiment tracking, API serving, containerization, and continuous integration.
 
@@ -86,4 +86,8 @@ The project includes a GitHub Actions workflow (.github/workflows/ci.yml) that a
 
  - Environment setup and dependency installation.
 
+<<<<<<< HEAD
  - Automated execution of all pytest suites to ensure code health on every code push.
+=======
+Automated execution of all pytest suites to ensure code health on every code push.
+>>>>>>> e3bab9b8606d6be18010d8e0e5bdf333d6b1fcf7
