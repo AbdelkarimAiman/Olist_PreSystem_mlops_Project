@@ -33,6 +33,7 @@ Olist_PreSystem_mlops_Project/
 ├── docker-compose.yml         # Multi-container orchestration
 ├── requirements.txt           # Python dependencies
 └── dvc.yaml                   # DVC pipeline stages
+```text
 
 ## 🛠️ Prerequisites
 
