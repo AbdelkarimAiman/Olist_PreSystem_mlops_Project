@@ -1,4 +1,4 @@
-# Olist MLOps & Pre-System Project (Task 3)
+# Olist MLOps & Pre-System Project
 
 A comprehensive Machine Learning Operations (MLOps) project built on the Olist e-commerce dataset, covering the complete end-to-end lifecycle including data preprocessing, training, experiment tracking, API serving, containerization, and continuous integration.
 
